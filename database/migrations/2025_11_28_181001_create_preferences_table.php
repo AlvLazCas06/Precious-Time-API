@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('preferences', function (Blueprint $table) {
             $table->id();
-            $table->string('theme');
+            $table->foreignId('user_id')->constrained('users', 'id')->cascadeOnDelete();
+            $table->enum('theme', ['light', 'dark']);
             $table->boolean('notifications_active')->default(true);
             $table->timestamps();
         });

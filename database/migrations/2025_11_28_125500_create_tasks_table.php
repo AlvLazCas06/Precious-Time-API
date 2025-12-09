@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->constrained('categories', 'id')->cascadeOnDelete();
             $table->string('title');
-            $table->text('description');
-            $table->string('status');
+            $table->text('description')->nullable();
+            $table->enum('status', ['pendiente', 'en_proceso', 'completado'])->default('pendiente');
             $table->string('priority');
             $table->boolean('done')->default(false);
             $table->datetime('completed_at');
