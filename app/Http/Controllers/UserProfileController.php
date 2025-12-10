@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\NotificationType;
+use App\Models\UserProfile;
 use Illuminate\Http\Request;
 
-class NotificationTypeController extends Controller
+class UserProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class NotificationTypeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(NotificationType $notificationType)
+    public function show(UserProfile $userProfile)
     {
         //
     }
@@ -42,7 +42,7 @@ class NotificationTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(NotificationType $notificationType)
+    public function edit(UserProfile $userProfile)
     {
         //
     }
@@ -50,7 +50,7 @@ class NotificationTypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, NotificationType $notificationType)
+    public function update(Request $request, UserProfile $userProfile)
     {
         //
     }
@@ -58,7 +58,7 @@ class NotificationTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(NotificationType $notificationType)
+    public function destroy(UserProfile $userProfile)
     {
         //
     }

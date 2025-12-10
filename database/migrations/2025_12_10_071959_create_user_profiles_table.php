@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('notification_types', function (Blueprint $table) {
+        Schema::create('user_profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->foreignId('user_id')->constrained('users', 'id')->cascadeOnDelete();
+            $table->boolean('is_premium')->default(false);
             $table->timestamps();
         });
     }
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('notification_types');
+        Schema::dropIfExists('user_profiles');
     }
 };

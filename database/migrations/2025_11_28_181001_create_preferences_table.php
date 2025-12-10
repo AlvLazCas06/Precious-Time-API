@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users', 'id')->cascadeOnDelete();
             $table->enum('theme', ['light', 'dark']);
             $table->boolean('notifications_active')->default(true);
+            $table->enum('notification_type', ['email', 'sms', 'in_app'])->default('in_app');
             $table->timestamps();
         });
     }
