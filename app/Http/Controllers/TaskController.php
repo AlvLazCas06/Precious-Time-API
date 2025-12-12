@@ -12,7 +12,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        return Task::where('user_id', auth()->id())->get();
     }
 
     /**
@@ -28,7 +28,15 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string']
+        ]);
+        $task = Task::create([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+        return response('task' -> $task, 201);
     }
 
     /**

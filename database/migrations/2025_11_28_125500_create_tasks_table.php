@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('status', ['pendiente', 'en_proceso', 'completado'])->default('pendiente');
             $table->string('priority');
             $table->boolean('done')->default(false);
-            $table->datetime('completed_at');
+            $table->datetime('completed_at')->nullable();
             $table->timestamps();
         });
     }

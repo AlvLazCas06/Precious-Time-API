@@ -20,7 +20,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -28,7 +28,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'emoji' => ['required', 'string'],
+            'color' => ['required', 'string']
+        ]);
+
+        $category = Category::create([
+            'name' => $request->name,
+            'emoji' => $request->emoji,
+            'color' => $request->color
+        ]);
+
+        return response()->json($category, 201);
     }
 
     /**
