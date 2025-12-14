@@ -15,10 +15,15 @@ class Category extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'user_id',
         'name',
         'emoji',
         'color',
         'is_system'
     ];
+
+    protected $table = 'categories';
+
+    public function tasks() {
+        return $this->hasMany(Task::class);
+    }
 }

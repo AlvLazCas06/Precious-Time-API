@@ -15,7 +15,7 @@ class Task extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'user_id',
+        'category_id',
         'title',
         'description',
         'status',
@@ -23,5 +23,13 @@ class Task extends Model
         'done',
         'completed_at'
     ];
+
+    public function category() {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function users() {
+        return $this->belongsToMany(User::class);
+    }
 
 }

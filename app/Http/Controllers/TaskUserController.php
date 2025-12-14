@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task_User;
+use App\Models\TaskUser;
 use Illuminate\Http\Request;
 
 class TaskUserController extends Controller
@@ -34,7 +34,7 @@ class TaskUserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Task_User $task_User)
+    public function show(TaskUser $task_User)
     {
         //
     }
@@ -42,7 +42,7 @@ class TaskUserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Task_User $task_User)
+    public function edit(TaskUser $task_User)
     {
         //
     }
@@ -50,7 +50,7 @@ class TaskUserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task_User $task_User)
+    public function update(Request $request, TaskUser $task_User)
     {
         //
     }
@@ -58,7 +58,7 @@ class TaskUserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task_User $task_User)
+    public function destroy(TaskUser $task_User)
     {
         //
     }

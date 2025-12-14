@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('preferences', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users', 'id')->cascadeOnDelete();
-            $table->enum('theme', ['light', 'dark']);
+            $table->enum('theme', ['light', 'dark'])->default('light');
             $table->boolean('notifications_active')->default(true);
             $table->enum('notification_type', ['email', 'sms', 'in_app'])->default('in_app');
             $table->timestamps();

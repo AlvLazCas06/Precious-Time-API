@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\TaskUser;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -12,7 +13,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return Task::where('user_id', auth()->id())->get();
+        return Task::all();
     }
 
     /**
@@ -30,13 +31,19 @@ class TaskController extends Controller
     {
         $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string']
+            'description' => ['nullable', 'string'],
+            'category_id' => ['required', 'integer']
         ]);
         $task = Task::create([
+            'category_id' => $request->category_id,
             'title' => $request->title,
             'description' => $request->description,
         ]);
-        return response('task' -> $task, 201);
+        TaskUser::create([
+            'user_id' => auth()->id(),
+            'task_id' => $task->id
+        ]);
+        return response()->json($task, 201);
     }
 
     /**
@@ -68,6 +75,7 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        $task->delete();
+        return response()->json([], 204);
     }
 }
