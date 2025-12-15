@@ -12,7 +12,7 @@ class TaskUserController extends Controller
      */
     public function index()
     {
-        //
+        return TaskUser::where('user_id', auth()->id())->get();
     }
 
     /**

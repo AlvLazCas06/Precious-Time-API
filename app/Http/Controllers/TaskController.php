@@ -27,6 +27,11 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    /**
+     * Handle an incoming registration request.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -65,9 +70,21 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    /**
+     * Handle an incoming registration request.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function update(Request $request, Task $task)
     {
-        //
+        $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'category_id' => ['required', 'integer']
+        ]);
+
+        $task->update($request->all());
+        return response()->json($task, 200);
     }
 
     /**

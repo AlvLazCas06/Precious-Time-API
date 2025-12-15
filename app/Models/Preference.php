@@ -9,6 +9,13 @@ class Preference extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'theme',
+        'notifications_active',
+        'notification_type'
+    ];
+
     public function user() {
         return $this->belongsTo(User::class);
     }
