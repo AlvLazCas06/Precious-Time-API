@@ -12,7 +12,7 @@ class PreferenceController extends Controller
      */
     public function index()
     {
-        //
+        return Preference::where('user_id', auth()->id())->get();
     }
 
     /**
@@ -28,7 +28,10 @@ class PreferenceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $prefence = Preference::create([
+            'user_id'=> auth()->id()
+        ]);
+        return response()->json($prefence, 201);
     }
 
     /**

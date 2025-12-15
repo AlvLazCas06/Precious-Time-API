@@ -13,7 +13,12 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return Task::all();
+        if (auth()->user()->role == 'admin') {
+            return Task::all();
+        } else {
+            return TaskUser::where('user_id', auth()->id())->get();
+        }
+
     }
 
     /**

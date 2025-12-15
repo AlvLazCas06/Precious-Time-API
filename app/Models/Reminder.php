@@ -2,9 +2,33 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Reminder extends Model
 {
-    //
+    use HasFactory;
+
+    protected $fillable = [
+        'task_id',
+        'user_id',
+        'project_id',
+        'title',
+        'message',
+        'send_at',
+        'is_read'
+    ];
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
+    public function task() {
+        return $this->belongsTo(Task::class);
+    }
+
+    public function project() {
+        return $this->belongsTo(Project::class);
+    }
+
 }

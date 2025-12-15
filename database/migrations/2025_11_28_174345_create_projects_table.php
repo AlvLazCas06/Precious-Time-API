@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->datetime('start_date');
-            $table->datetime('finish_date');
-            $table->string('status');
-            $table->decimal('progress', 3, 2);
+            $table->datetime('finish_date')->nullable();
+            $table->enum('status', ['pendiente', 'en_proceso', 'completado', 'cancelado'])->default('pendiente');
+            $table->decimal('progress', 3, 2)->default(0);
             $table->timestamps();
         });
     }

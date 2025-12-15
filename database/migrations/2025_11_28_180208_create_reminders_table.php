@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('reminders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('task_id')->constrained('tasks', 'id')->cascadeOnDelete();
+            $table->foreignId('task_id')->nullable()->constrained('tasks', 'id')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users', 'id')->cascadeOnDelete();
-            $table->foreignId('project_id')->constrained('projects', 'id')->cascadeOnDelete();
+            $table->foreignId('project_id')->nullable()->constrained('projects', 'id')->cascadeOnDelete();
             $table->string('title');
             $table->text('message');
             $table->datetime('send_at');

@@ -19,4 +19,8 @@ class Project extends Model
         'progress'
     ];
 
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
 }
