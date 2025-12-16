@@ -28,7 +28,19 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'finish_date' => ['nullable', 'date']
+        ]);
+
+        $project = Project::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'finish_date' => $request->finish_date,
+            'user_id' => auth()->id()
+        ]);
+        return response()->json($project, 201);
     }
 
     /**
