@@ -26,6 +26,11 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    /**
+     * Handle an incoming registration request.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -61,6 +66,11 @@ class ProjectController extends Controller
 
     /**
      * Update the specified resource in storage.
+     */
+    /**
+     * Handle an incoming registration request.
+     *
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request, Project $project)
     {

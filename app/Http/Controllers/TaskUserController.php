@@ -26,9 +26,18 @@ class TaskUserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    /**
+     * Handle an incoming registration request.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'task_id' => ['required', 'integer']
+        ]);
+        $taskUser = TaskUser::create($request->all());
+        return response()->json($taskUser, 201);
     }
 
     /**
@@ -60,6 +69,7 @@ class TaskUserController extends Controller
      */
     public function destroy(TaskUser $task_User)
     {
-        //
+        $task_User->delete();
+        return response()->json([], 204);
     }
 }

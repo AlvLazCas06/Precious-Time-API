@@ -26,6 +26,11 @@ class ReminderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    /**
+     * Handle an incoming registration request.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -56,6 +61,11 @@ class ReminderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+    /**
+     * Handle an incoming registration request.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function edit(Reminder $reminder)
     {
         //
@@ -63,6 +73,11 @@ class ReminderController extends Controller
 
     /**
      * Update the specified resource in storage.
+     */
+    /**
+     * Handle an incoming registration request.
+     *
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request, Reminder $reminder)
     {

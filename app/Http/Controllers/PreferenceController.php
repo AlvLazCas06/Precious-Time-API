@@ -53,6 +53,11 @@ class PreferenceController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    /**
+     * Handle an incoming registration request.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function update(Request $request, Preference $preference)
     {
         $preference->update($request->all());
