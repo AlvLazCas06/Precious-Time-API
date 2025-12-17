@@ -48,7 +48,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        return $category;
     }
 
     /**
@@ -64,7 +64,14 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'emoji' => ['required', 'string'],
+            'color' => ['required', 'string']
+        ]);
+
+        $category->update($request->all());
+        return response()->json($category, 200);
     }
 
     /**
@@ -72,6 +79,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return response()->json([], 204);
     }
 }

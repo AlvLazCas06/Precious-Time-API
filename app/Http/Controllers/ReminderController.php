@@ -28,7 +28,21 @@ class ReminderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'task_id' => ['nullable', 'integer'],
+            'project_id' => ['nullable', 'integer'],
+            'title' => ['required', 'string', 'max:255'],
+            'message' => ['nullable', 'string']
+        ]);
+
+        $reminder = Reminder::create([
+            'task_id' => $request->task_id,
+            'project_id' => $request->project_id,
+            'user_id' => auth()->id(),
+            'title' => $request->title,
+            'message' => $request->message
+        ]);
+        return response()->json($reminder, 201);
     }
 
     /**
@@ -36,7 +50,7 @@ class ReminderController extends Controller
      */
     public function show(Reminder $reminder)
     {
-        //
+        return $reminder;
     }
 
     /**
@@ -52,7 +66,14 @@ class ReminderController extends Controller
      */
     public function update(Request $request, Reminder $reminder)
     {
-        //
+        $request->validate([
+            'task_id' => ['nullable', 'integer'],
+            'project_id' => ['nullable', 'integer'],
+            'title' => ['required', 'string', 'max:255'],
+            'message' => ['nullable', 'string']
+        ]);
+
+        $reminder->update($request->all());
     }
 
     /**
@@ -60,6 +81,7 @@ class ReminderController extends Controller
      */
     public function destroy(Reminder $reminder)
     {
-        //
+        $reminder->delete();
+        return response()->json([], 204);
     }
 }

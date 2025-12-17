@@ -39,7 +39,7 @@ class PreferenceController extends Controller
      */
     public function show(Preference $preference)
     {
-        //
+        return $preference;
     }
 
     /**
@@ -55,7 +55,8 @@ class PreferenceController extends Controller
      */
     public function update(Request $request, Preference $preference)
     {
-        //
+        $preference->update($request->all());
+        return response()->json($preference, 200);
     }
 
     /**
@@ -63,6 +64,7 @@ class PreferenceController extends Controller
      */
     public function destroy(Preference $preference)
     {
-        //
+        $preference->delete();
+        return response()->json([], 204);
     }
 }
