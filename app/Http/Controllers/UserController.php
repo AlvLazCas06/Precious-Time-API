@@ -75,7 +75,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
+
+        $user->update([
+            'is_active' => false
+        ]);
         return response()->json([], 204);
     }
 }
