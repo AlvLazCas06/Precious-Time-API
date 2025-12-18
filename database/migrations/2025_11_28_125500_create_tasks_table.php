@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained('categories', 'id')->cascadeOnDelete()->default(1);
+            $table->foreignId('category_id')->nullable()->constrained('categories', 'id')->nullOnDelete();
             $table->string('title');
             $table->text('description')->nullable();
             $table->enum('status', ['pendiente', 'en_proceso', 'completado'])->default('pendiente');
