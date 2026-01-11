@@ -34,16 +34,12 @@ class ReminderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'task_id' => ['nullable', 'integer'],
-            'project_id' => ['nullable', 'integer'],
             'title' => ['required', 'string', 'max:255'],
             'message' => ['nullable', 'string']
         ]);
 
         $reminder = Reminder::create([
-            'task_id' => $request->task_id,
-            'project_id' => $request->project_id,
-            'user_id' => auth()->id(),
+            'user_id' => $request->user_id,
             'title' => $request->title,
             'message' => $request->message
         ]);
@@ -81,14 +77,8 @@ class ReminderController extends Controller
      */
     public function update(Request $request, Reminder $reminder)
     {
-        $request->validate([
-            'task_id' => ['nullable', 'integer'],
-            'project_id' => ['nullable', 'integer'],
-            'title' => ['required', 'string', 'max:255'],
-            'message' => ['nullable', 'string']
-        ]);
-
         $reminder->update($request->all());
+        return response()->json($reminder, 200);
     }
 
     /**

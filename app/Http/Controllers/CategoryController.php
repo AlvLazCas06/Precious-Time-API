@@ -42,7 +42,8 @@ class CategoryController extends Controller
         $category = Category::create([
             'name' => $request->name,
             'emoji' => $request->emoji,
-            'color' => $request->color
+            'color' => $request->color,
+            'is_system' => $request->is_system
         ]);
 
         return response()->json($category, 201);
