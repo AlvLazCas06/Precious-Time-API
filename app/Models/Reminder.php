@@ -10,12 +10,9 @@ class Reminder extends Model
     use HasFactory;
 
     protected $fillable = [
-        'task_id',
         'user_id',
-        'project_id',
         'title',
         'message',
-        'send_at',
         'is_read'
     ];
 
