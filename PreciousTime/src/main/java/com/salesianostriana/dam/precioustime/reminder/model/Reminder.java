@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.precioustime.category.model;
+package com.salesianostriana.dam.precioustime.reminder.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,17 +16,18 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Category {
+public class Reminder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String title;
 
-    private String emoji;
+    private String message;
 
-    private String color;
+    @Builder.Default
+    private boolean read = false;
 
     @Override
     public final boolean equals(Object o) {
@@ -35,8 +36,8 @@ public class Category {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Category category = (Category) o;
-        return getId() != null && Objects.equals(getId(), category.getId());
+        Reminder reminder = (Reminder) o;
+        return getId() != null && Objects.equals(getId(), reminder.getId());
     }
 
     @Override
