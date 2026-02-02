@@ -5,6 +5,7 @@ import com.salesianostriana.dam.precioustime.shared.exception.BadRequestExceptio
 import com.salesianostriana.dam.precioustime.shared.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -39,6 +40,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage());
         pd.setTitle("Datos duplicados");
         pd.setType(URI.create("https://www.salesianos-triana.com/conflict"));
+        return pd;
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ProblemDetail handleUsernameNotFoundException(UsernameNotFoundException ex) {
+        ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+        pd.setTitle("Username not found");
+        pd.setType(URI.create("https://www.salesianos-triana.com/not-found"));
         return pd;
     }
 
