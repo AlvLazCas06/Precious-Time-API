@@ -1,11 +1,11 @@
-package com.salesianostriana.dam.precioustime.preference.model;
+package com.salesianostriana.dam.precioustime.preference.
+model;
 
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
-
 @Getter
 @Setter
 @ToString
@@ -23,10 +23,12 @@ public class Preference {
     private boolean notificationsActive = true;
 
     @Enumerated(EnumType.STRING)
-    private Theme theme;
+    @Builder.Default
+    private Theme theme = Theme.LIGHT;
 
     @Enumerated(EnumType.STRING)
-    private NotificationType type;
+    @Builder.Default
+    private NotificationType type = NotificationType.IN_APP;
 
     @Override
     public final boolean equals(Object o) {
