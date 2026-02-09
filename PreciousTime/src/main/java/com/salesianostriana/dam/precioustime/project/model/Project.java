@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.precioustime.project.model;
 
 import com.salesianostriana.dam.precioustime.task.model.Task;
+import com.salesianostriana.dam.precioustime.user.model.*;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
@@ -43,6 +44,9 @@ public class Project {
     @ToString.Exclude
     private Set<Task> tasks = new HashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Override
     public final boolean equals(Object o) {
