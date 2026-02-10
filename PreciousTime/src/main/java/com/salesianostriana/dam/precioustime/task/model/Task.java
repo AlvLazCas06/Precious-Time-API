@@ -2,6 +2,7 @@ package com.salesianostriana.dam.precioustime.task.model;
 
 import com.salesianostriana.dam.precioustime.category.model.Category;
 import com.salesianostriana.dam.precioustime.project.model.Project;
+import com.salesianostriana.dam.precioustime.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
@@ -41,6 +42,10 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Override
     public final boolean equals(Object o) {
