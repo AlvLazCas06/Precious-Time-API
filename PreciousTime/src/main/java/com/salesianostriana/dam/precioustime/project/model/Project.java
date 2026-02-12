@@ -25,6 +25,7 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
     @Column(columnDefinition = "TEXT")
@@ -37,7 +38,8 @@ public class Project {
     @Enumerated(EnumType.STRING)
     private ProjectStatus status;
 
-    private BigDecimal progress;
+    @Builder.Default
+    private BigDecimal progress = new BigDecimal(0);
 
     @OneToMany(mappedBy = "project")
     @Builder.Default
@@ -62,6 +64,16 @@ public class Project {
     @Override
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
+
+    public void addTask(Task task) {
+        this.tasks.add(task);
+        task.setProject(this);
+    }
+
+    public void deleteTask(Task task) {
+        this.tasks.remove(task);
+        task.setProject(null);
     }
 
 }

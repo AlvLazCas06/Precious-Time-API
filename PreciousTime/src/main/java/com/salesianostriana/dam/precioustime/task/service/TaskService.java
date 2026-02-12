@@ -1,5 +1,8 @@
 package com.salesianostriana.dam.precioustime.task.service;
 
+import com.salesianostriana.dam.precioustime.category.exception.CategoryNotFoundException;
+import com.salesianostriana.dam.precioustime.category.model.Category;
+import com.salesianostriana.dam.precioustime.category.service.CategoryService;
 import com.salesianostriana.dam.precioustime.project.exception.ProjectNotFoundException;
 import com.salesianostriana.dam.precioustime.project.model.Project;
 import com.salesianostriana.dam.precioustime.project.service.ProjectService;
@@ -16,12 +19,20 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final ProjectService projectService;
+    private final CategoryService categoryService;
 
-    public Task saveTask(CreateTaskRequest createTaskRequest) {
-        Task task = createTaskRequest.toEntity();
-        if (createTaskRequest.projectId() != null) {
+    public Task saveTask(CreateTaskRequest cmd) {
+        Task task = cmd.toEntity();
+        try {
+            Category category = categoryService.getById(cmd.categoryId());
+            task.setCategory(category);
+        } catch (CategoryNotFoundException e) {
+            throw new BadRequestException();
+        }
+        if (cmd.projectId() != null) {
             try {
-                Project project = projectService.findById(createTaskRequest.projectId());
+                Project project = projectService.findById(cmd.projectId());
+                project.addTask(task);
             } catch (ProjectNotFoundException e) {
                 throw new BadRequestException();
             }
