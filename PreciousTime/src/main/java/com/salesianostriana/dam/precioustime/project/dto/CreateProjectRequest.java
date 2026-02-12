@@ -10,8 +10,6 @@ public record CreateProjectRequest(
         String name,
         String description,
         @NotNull
-        ProjectStatus status,
-        @NotNull
         Long userId
 ) {
 
@@ -19,7 +17,6 @@ public record CreateProjectRequest(
         return Project.builder()
                 .name(name)
                 .description(description)
-                .status(status)
                 .build();
     }
 

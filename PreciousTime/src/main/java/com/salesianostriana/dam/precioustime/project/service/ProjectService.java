@@ -3,6 +3,7 @@ package com.salesianostriana.dam.precioustime.project.service;
 import com.salesianostriana.dam.precioustime.project.dto.CreateProjectRequest;
 import com.salesianostriana.dam.precioustime.project.exception.ProjectNotFoundException;
 import com.salesianostriana.dam.precioustime.project.model.Project;
+import com.salesianostriana.dam.precioustime.project.model.ProjectStatus;
 import com.salesianostriana.dam.precioustime.project.repository.ProjectRepository;
 import com.salesianostriana.dam.precioustime.shared.exception.BadRequestException;
 import com.salesianostriana.dam.precioustime.user.exception.UserNotFoundException;
@@ -26,6 +27,7 @@ public class ProjectService {
         } catch (UserNotFoundException e) {
             throw new BadRequestException();
         }
+        project.setStatus(ProjectStatus.EN_PROCESO);
         return projectRepository.save(project);
     }
 

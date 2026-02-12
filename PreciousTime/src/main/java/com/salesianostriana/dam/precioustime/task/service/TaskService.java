@@ -8,6 +8,7 @@ import com.salesianostriana.dam.precioustime.project.model.Project;
 import com.salesianostriana.dam.precioustime.project.service.ProjectService;
 import com.salesianostriana.dam.precioustime.shared.exception.BadRequestException;
 import com.salesianostriana.dam.precioustime.task.dto.CreateTaskRequest;
+import com.salesianostriana.dam.precioustime.task.exception.TaskNotFoundException;
 import com.salesianostriana.dam.precioustime.task.model.Task;
 import com.salesianostriana.dam.precioustime.task.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,11 @@ public class TaskService {
             }
         }
         return taskRepository.save(task);
+    }
+
+    public Task getById(Long id) {
+        return taskRepository.findById(id).
+                orElseThrow(() -> new TaskNotFoundException(id));
     }
 
 }
