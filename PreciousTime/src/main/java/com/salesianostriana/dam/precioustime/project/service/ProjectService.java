@@ -21,12 +21,6 @@ public class ProjectService {
 
     public Project saveProject(CreateProjectRequest cmd) {
         Project project = cmd.toEntity();
-        try {
-            User user = userService.getById(cmd.userId());
-            project.setUser(user);
-        } catch (UserNotFoundException e) {
-            throw new BadRequestException();
-        }
         project.setStatus(ProjectStatus.EN_PROCESO);
         return projectRepository.save(project);
     }

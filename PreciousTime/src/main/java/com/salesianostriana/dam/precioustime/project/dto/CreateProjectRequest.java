@@ -5,12 +5,12 @@ import com.salesianostriana.dam.precioustime.project.model.ProjectStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.UUID;
+
 public record CreateProjectRequest(
         @NotBlank
         String name,
-        String description,
-        @NotNull
-        Long userId
+        String description
 ) {
 
     public Project toEntity() {
