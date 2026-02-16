@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -42,11 +41,15 @@ public class JwtAccessTokenService {
                 .build();
     }
 
-    public String generateAccessToken(String username) {
+    public String generateAccessToken(User user) {
+        return generateAccessToken(user.getId().toString());
+    }
+
+    public String generateAccessToken(String uuid) {
         return Jwts.builder()
                 .header().setType("JWT")
                 .and()
-                .subject(username)
+                .subject(uuid)
                 .issuedAt(new Date())
                 .expiration(Date.from(
                         Instant.now()
@@ -56,17 +59,12 @@ public class JwtAccessTokenService {
                 .compact();
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
-        return configuration.getAuthenticationManager();
-    }
-
     public boolean validateAccessToken(String token) throws JwtException {
         jwtParser.parseSignedClaims(token);
         return true;
     }
 
-    public String getUsernameFromAccessToken(String token) {
+    public String getUserIdFromAccessToken(String token) {
         return jwtParser.parseSignedClaims(token)
                 .getBody()
                 .getSubject();

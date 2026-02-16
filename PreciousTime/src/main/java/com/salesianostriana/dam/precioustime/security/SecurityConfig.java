@@ -53,7 +53,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/error").permitAll()
                                 .requestMatchers("/auth/**").permitAll()
-                                .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/api/v1/*/admin/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 ).exceptionHandling(excepz ->
                         excepz.authenticationEntryPoint(jwtAuthenticationEntryPoint)
@@ -65,7 +65,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
         return configuration.getAuthenticationManager();
     }
 

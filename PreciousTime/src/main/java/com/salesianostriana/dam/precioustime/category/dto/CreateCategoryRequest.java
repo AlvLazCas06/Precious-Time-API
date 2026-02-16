@@ -18,7 +18,7 @@ public record CreateCategoryRequest(
 
     public Category toEntity() {
         return Category.builder()
-                .name(name)
+                .name(name.toLowerCase())
                 .emoji(emoji)
                 .color(color)
                 .build();

@@ -20,8 +20,7 @@ public class SecurityAuditorAware implements AuditorAware<String> {
                 .filter(Authentication::isAuthenticated)
                 .map(Authentication::getPrincipal)
                 .map(User.class::cast)
-                .map(User::getId)
-                .map(UUID::toString);
+                .map(User::getUsername);
     }
 
 }

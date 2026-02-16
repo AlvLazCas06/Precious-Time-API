@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.precioustime.project.model;
 
 import com.salesianostriana.dam.precioustime.task.model.Task;
+import com.salesianostriana.dam.precioustime.task.model.TaskStatus;
 import com.salesianostriana.dam.precioustime.user.model.*;
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,7 +32,7 @@ public class Project {
     @Column(nullable = false)
     private String name;
 
-    @Column(columnDefinition = "TEXT")
+    @Lob
     private String description;
 
     private LocalDateTime startDate;
@@ -76,6 +77,13 @@ public class Project {
     public void deleteTask(Task task) {
         this.tasks.remove(task);
         task.setProject(null);
+    }
+
+    public void changeProgress() {
+        this.progress = BigDecimal.valueOf(
+                this.tasks.stream()
+                        .filter(task -> task.getStatus().equals(TaskStatus.COMPLETADO))
+                        .count() / this.tasks.stream().count());
     }
 
 }

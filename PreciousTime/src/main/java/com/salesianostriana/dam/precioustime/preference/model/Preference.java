@@ -4,6 +4,8 @@ model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Objects;
 @Getter
@@ -13,6 +15,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Preference {
 
     @Id
@@ -29,6 +32,10 @@ public class Preference {
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private NotificationType type = NotificationType.IN_APP;
+
+    @CreatedBy
+    @Column(updatable = false)
+    private String author;
 
     @Override
     public final boolean equals(Object o) {

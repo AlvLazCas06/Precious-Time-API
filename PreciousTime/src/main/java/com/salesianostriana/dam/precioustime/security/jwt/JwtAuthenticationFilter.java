@@ -4,8 +4,6 @@ import com.salesianostriana.dam.precioustime.user.repository.UserRepository;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +16,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -32,9 +31,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         try {
             if (StringUtils.hasText(token) && jwtService.validateAccessToken(token)) {
-                String username = jwtService.getUsernameFromAccessToken(token);
+                String uuid = jwtService.getUserIdFromAccessToken(token);
 
-                userRepository.findByUsername(username).ifPresentOrElse(user -> {
+                userRepository.findById(UUID.fromString(uuid))
+                        .ifPresentOrElse(user -> {
                     UsernamePasswordAuthenticationToken
                             authenticationToken = new UsernamePasswordAuthenticationToken(
                             user,
@@ -51,7 +51,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }, () -> {;
                     // Caso raro de que un usuario tenga un token válido
                     // pero no encontremos su username en la base de datos
-                    throw new UsernameNotFoundException("User not found with username: " + username);
+                    throw new UsernameNotFoundException("User not found with id: " + uuid);
                 });
 
             }

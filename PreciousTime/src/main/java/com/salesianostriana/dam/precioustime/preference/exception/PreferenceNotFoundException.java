@@ -11,4 +11,8 @@ public class PreferenceNotFoundException extends NotFoundException {
         super("Las preferencias de usuario no han sido encontradas.");
     }
 
+    public PreferenceNotFoundException(Long id) {
+        super("Las preferencias con el id: %d, no existen".formatted(id));
+    }
+
 }

@@ -6,6 +6,8 @@ import com.salesianostriana.dam.precioustime.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -17,6 +19,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Task {
 
     @Id
@@ -46,9 +49,8 @@ public class Task {
     @JoinColumn(name = "project_id")
     private Project project;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @CreatedBy
+    private String author;
 
     @Override
     public final boolean equals(Object o) {
