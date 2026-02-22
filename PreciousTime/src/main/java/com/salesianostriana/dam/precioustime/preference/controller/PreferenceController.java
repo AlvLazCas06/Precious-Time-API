@@ -6,6 +6,7 @@ import com.salesianostriana.dam.precioustime.preference.service.PreferenceServic
 import com.salesianostriana.dam.precioustime.user.model.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,12 @@ public class PreferenceController {
         return ResponseEntity.ok(
                 PreferenceResponse.of(preferenceService.getPreferenceByAuthor(user.getUsername()))
         );
+    }
+
+    @PostMapping
+    public ResponseEntity<PreferenceResponse> createPreference() {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(PreferenceResponse.of(preferenceService.savePreference()));
     }
 
     @PutMapping("/{id:[0-9]+}")

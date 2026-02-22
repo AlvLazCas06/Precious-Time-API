@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public record CreateProjectRequest(
         @NotBlank
-        @Min(8)
+        //@Min(8)
         String name,
         String description
 ) {

@@ -13,6 +13,10 @@ public class PreferenceService {
 
     private final PreferenceRepository preferenceRepository;
 
+    public Preference savePreference() {
+        return preferenceRepository.save(Preference.builder().build());
+    }
+
     public Preference editPreference(Long id, EditPreferenceRequest cmd) {
         return preferenceRepository.findById(id)
                 .map(preference -> {

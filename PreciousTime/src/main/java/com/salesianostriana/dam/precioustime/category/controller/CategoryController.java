@@ -20,7 +20,7 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-    @GetMapping("/admin")
+    @GetMapping
     public Page<CategoryResponse> getCategories(@PageableDefault Pageable pageable) {
         return categoryService.getAllCategories(pageable)
                 .map(CategoryResponse::of);

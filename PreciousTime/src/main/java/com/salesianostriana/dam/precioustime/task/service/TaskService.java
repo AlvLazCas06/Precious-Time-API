@@ -10,8 +10,12 @@ import com.salesianostriana.dam.precioustime.shared.exception.BadRequestExceptio
 import com.salesianostriana.dam.precioustime.task.dto.CreateTaskRequest;
 import com.salesianostriana.dam.precioustime.task.exception.TaskNotFoundException;
 import com.salesianostriana.dam.precioustime.task.model.Task;
+import com.salesianostriana.dam.precioustime.task.model.TaskStatus;
 import com.salesianostriana.dam.precioustime.task.repository.TaskRepository;
+import com.salesianostriana.dam.precioustime.user.model.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -38,12 +42,21 @@ public class TaskService {
                 throw new BadRequestException();
             }
         }
+        task.setStatus(TaskStatus.PENDIENTE);
         return taskRepository.save(task);
     }
 
     public Task getById(Long id) {
         return taskRepository.findById(id).
                 orElseThrow(() -> new TaskNotFoundException(id));
+    }
+
+    public Page<Task> getTasks(Pageable pageable, User user) {
+        Page<Task> tasks = taskRepository.findByAuthor(pageable, user.getUsername());
+        if (tasks.isEmpty()) {
+            throw new TaskNotFoundException();
+        }
+        return tasks;
     }
 
 }
