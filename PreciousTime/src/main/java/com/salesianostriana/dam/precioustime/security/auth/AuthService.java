@@ -25,7 +25,7 @@ public class AuthService {
         );
         User user = userRepository.findByUsername(authentication.getName()).get();
         String token = jwtAccessTokenService.generateAccessToken(user);
-        return new LoginResponse(token, authentication.getName());
+        return new LoginResponse(token, authentication.getName(), user.getRoles());
     }
 
 }

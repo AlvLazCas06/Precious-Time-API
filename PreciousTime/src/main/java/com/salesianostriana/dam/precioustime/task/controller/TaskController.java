@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,11 +30,22 @@ public class TaskController {
     }
 
     @GetMapping
-    public Page<TaskResponse> getTaskUser(
+    public Page<TaskResponse> getTasksUser(
             @PageableDefault Pageable pageable,
             @AuthenticationPrincipal User user
     ) {
         return taskService.getTasks(pageable, user).map(TaskResponse::of);
+    }
+
+    @GetMapping("/admin")
+    public Page<TaskResponse> getAllTask(@PageableDefault Pageable pageable) {
+        return taskService.getAllTask(pageable).map(TaskResponse::of);
+    }
+
+    @PostAuthorize("returnObject.author() == authentication.principal.username or hasRole('ADMIN')")
+    @GetMapping("/{id:[0-9]+}")
+    public TaskResponse getTask(@PathVariable Long id) {
+        return TaskResponse.of(taskService.getById(id));
     }
 
 }

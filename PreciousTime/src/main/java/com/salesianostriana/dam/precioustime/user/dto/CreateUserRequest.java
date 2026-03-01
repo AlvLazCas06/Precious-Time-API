@@ -24,9 +24,7 @@ public record CreateUserRequest(
         String fullName,
         @NotBlank
         @Email
-        String email,
-        @NotBlank
-        String phoneNumber
+        String email
 ) {
 
     public User toEntity() {
@@ -34,7 +32,6 @@ public record CreateUserRequest(
                 .username(username)
                 .fullName(fullName)
                 .email(email)
-                .phoneNumber(phoneNumber)
                 .build();
     }
 

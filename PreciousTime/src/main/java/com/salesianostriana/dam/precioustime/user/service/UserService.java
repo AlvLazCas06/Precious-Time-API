@@ -3,12 +3,14 @@ package com.salesianostriana.dam.precioustime.user.service;
 import com.salesianostriana.dam.precioustime.user.dto.CreateUserRequest;
 import com.salesianostriana.dam.precioustime.user.exception.UserNotFoundException;
 import com.salesianostriana.dam.precioustime.user.model.User;
+import com.salesianostriana.dam.precioustime.user.model.UserRole;
 import com.salesianostriana.dam.precioustime.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -31,6 +33,7 @@ public class UserService {
     public User createUser(CreateUserRequest cmd) {
         User user = cmd.toEntity();
         user.setPassword(passwordEncoder.encode(cmd.password()));
+        user.setRoles(Set.of(UserRole.USER));
         return userRepository.save(user);
     }
 

@@ -2,10 +2,12 @@ package com.salesianostriana.dam.precioustime.project.service;
 
 import com.salesianostriana.dam.precioustime.project.dto.CreateProjectRequest;
 import com.salesianostriana.dam.precioustime.project.dto.EditProjectRequest;
+import com.salesianostriana.dam.precioustime.project.dto.ProjectSpecDTO;
 import com.salesianostriana.dam.precioustime.project.exception.ProjectNotFoundException;
 import com.salesianostriana.dam.precioustime.project.model.Project;
 import com.salesianostriana.dam.precioustime.project.model.ProjectStatus;
 import com.salesianostriana.dam.precioustime.project.repository.ProjectRepository;
+import com.salesianostriana.dam.precioustime.project.spec.ProjectSpec;
 import com.salesianostriana.dam.precioustime.shared.exception.BadRequestException;
 import com.salesianostriana.dam.precioustime.user.exception.UserNotFoundException;
 import com.salesianostriana.dam.precioustime.user.model.User;
@@ -13,6 +15,7 @@ import com.salesianostriana.dam.precioustime.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.PredicateSpecification;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -40,8 +43,14 @@ public class ProjectService {
         return projects;
     }
 
-    public Page<Project> findAllProjects(Pageable pageable) {
-        Page<Project> projects = projectRepository.findAll(pageable);
+    public Page<Project> findAllProjects(Pageable pageable, ProjectSpecDTO spec) {
+        Page<Project> projects = projectRepository.findBy(
+                PredicateSpecification.allOf(
+                        ProjectSpec.specName(spec.name()),
+                        ProjectSpec.specStatus(spec.status())
+                ),
+                q -> q.page(pageable)
+        );
         if (projects.isEmpty()) {
             throw new ProjectNotFoundException();
         }

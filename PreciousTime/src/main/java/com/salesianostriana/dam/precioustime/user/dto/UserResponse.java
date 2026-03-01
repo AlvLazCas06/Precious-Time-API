@@ -1,13 +1,16 @@
 package com.salesianostriana.dam.precioustime.user.dto;
 
 import com.salesianostriana.dam.precioustime.user.model.User;
+import com.salesianostriana.dam.precioustime.user.model.UserRole;
+
+import java.util.Set;
 
 public record UserResponse(
         String username,
         String email,
         String fullName,
-        String phoneNumber,
-        boolean premium
+        boolean premium,
+        Set<UserRole> roles
 ) {
 
     public static UserResponse of(User user) {
@@ -15,8 +18,8 @@ public record UserResponse(
                 user.getUsername(),
                 user.getEmail(),
                 user.getFullName(),
-                user.getPhoneNumber(),
-                user.isPremium()
+                user.isPremium(),
+                user.getRoles()
         );
     }
 

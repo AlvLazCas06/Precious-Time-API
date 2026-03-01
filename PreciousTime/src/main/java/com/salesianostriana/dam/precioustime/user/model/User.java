@@ -3,11 +3,13 @@ package com.salesianostriana.dam.precioustime.user.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,22 +39,22 @@ public class User implements UserDetails, CredentialsContainer {
     @Column(nullable = false)
     private String fullName;
 
-    @Column(nullable = false)
-    private String phoneNumber;
-
     @Builder.Default
     private boolean premium = false;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
-    private Set<UserRole> authorities = new HashSet<>();
+    private Set<UserRole> roles = new HashSet<>();
 
     @Builder.Default
     private boolean active = true;
 
+    @CreatedDate
+    private LocalDateTime registerAt;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities.stream()
+        return roles.stream()
                 .map(role -> "ROLE_" + role)
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toSet());

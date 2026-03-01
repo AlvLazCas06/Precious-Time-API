@@ -31,10 +31,10 @@ public class PreferenceController {
                 .body(PreferenceResponse.of(preferenceService.savePreference()));
     }
 
-    @PutMapping("/{id:[0-9]+}")
-    public ResponseEntity<PreferenceResponse> editPreference(@PathVariable Long id, @Valid @RequestBody EditPreferenceRequest cmd) {
+    @PutMapping
+    public ResponseEntity<PreferenceResponse> editPreference(@AuthenticationPrincipal User user, @Valid @RequestBody EditPreferenceRequest cmd) {
         return ResponseEntity.ok(
-                PreferenceResponse.of(preferenceService.editPreference(id, cmd))
+                PreferenceResponse.of(preferenceService.editPreference(user, cmd))
         );
     }
 

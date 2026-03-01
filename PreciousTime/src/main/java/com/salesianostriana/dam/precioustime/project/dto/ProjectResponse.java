@@ -15,6 +15,7 @@ public record ProjectResponse(
         LocalDateTime finishDate,
         String status,
         BigDecimal progress,
+        String author,
         List<TaskSummaryDTO> tasks
 ) {
 
@@ -35,6 +36,7 @@ public record ProjectResponse(
                         .toLowerCase()
                         .replace("_", " "),
                 project.getProgress(),
+                project.getAuthor(),
                 project.getTasks() != null
                         ? project.getTasks()
                             .stream()

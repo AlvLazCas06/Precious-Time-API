@@ -3,6 +3,10 @@ package com.salesianostriana.dam.precioustime.security;
 import com.salesianostriana.dam.precioustime.security.error.JwtAccessDeniedHandler;
 import com.salesianostriana.dam.precioustime.security.error.JwtAuthenticationEntryPoint;
 import com.salesianostriana.dam.precioustime.security.jwt.JwtAuthenticationFilter;
+import com.salesianostriana.dam.precioustime.user.model.User;
+import com.salesianostriana.dam.precioustime.user.model.UserRole;
+import com.salesianostriana.dam.precioustime.user.repository.UserRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,12 +18,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
+import java.util.Set;
 
 @Configuration
 @EnableWebSecurity
@@ -30,6 +36,8 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -37,7 +45,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(corsCong -> {
                     CorsConfiguration configuration = new CorsConfiguration();
-                    configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+                    configuration.setAllowedOrigins(List.of("http://localhost:4200"));
                     configuration.setAllowedMethods(List.of("GET","POST", "PUT", "DELETE"));
                     configuration.setAllowedHeaders(List.of("*"));
                     configuration.setAllowCredentials(true);
@@ -67,6 +75,28 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
         return configuration.getAuthenticationManager();
+    }
+
+    @PostConstruct
+    public void init() {
+        User admin = User.builder()
+                .username("admin")
+                .password(passwordEncoder.encode("admin1234"))
+                .email("admin@gmail.com")
+                .fullName("Admin")
+                .roles(Set.of(UserRole.ADMIN))
+                .build();
+        userRepository.save(admin);
+
+        User user = User.builder()
+                .username("user")
+                .password(passwordEncoder.encode("user1234"))
+                .email("user@gmail.com")
+                .fullName("User")
+                .roles(Set.of(UserRole.USER))
+                .build();
+        userRepository.save(user);
+
     }
 
 }

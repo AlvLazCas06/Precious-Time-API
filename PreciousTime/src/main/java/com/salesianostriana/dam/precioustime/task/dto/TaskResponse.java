@@ -13,6 +13,7 @@ public record TaskResponse(
         String priority,
         CategorySummary category,
         String projectName,
+        String author,
         LocalDateTime completedAt
 ) {
 
@@ -23,9 +24,16 @@ public record TaskResponse(
                 task.getDescription(),
                 task.getStatus().name().toLowerCase(),
                 task.getPriority().name().toLowerCase(),
-                task.getCategory() != null ? CategorySummary.of(task.getCategory()) : null,
-                task.getProject() != null ? task.getProject().getName() : "No tiene un proyecto asignado",
-                task.getCompletedAt() != null ? task.getCompletedAt() : null
+                task.getCategory() != null
+                        ? CategorySummary.of(task.getCategory())
+                        : null,
+                task.getProject() != null
+                        ? task.getProject().getName()
+                        : "No tiene un proyecto asignado",
+                task.getAuthor(),
+                task.getCompletedAt() != null
+                        ? task.getCompletedAt()
+                        : null
         );
     }
 

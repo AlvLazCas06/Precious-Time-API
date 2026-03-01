@@ -1,9 +1,7 @@
 package com.salesianostriana.dam.precioustime.reminder.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.salesianostriana.dam.precioustime.user.model.User;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
@@ -28,6 +26,10 @@ public class Reminder {
 
     @Builder.Default
     private boolean read = false;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    public User receiver;
 
     @Override
     public final boolean equals(Object o) {

@@ -32,14 +32,14 @@ public class TaskService {
             Category category = categoryService.getById(cmd.categoryId());
             task.setCategory(category);
         } catch (CategoryNotFoundException e) {
-            throw new BadRequestException();
+            throw new BadRequestException(e.getMessage());
         }
         if (cmd.projectId() != null) {
             try {
                 Project project = projectService.findById(cmd.projectId());
                 project.addTask(task);
             } catch (ProjectNotFoundException e) {
-                throw new BadRequestException();
+                throw new BadRequestException(e.getMessage());
             }
         }
         task.setStatus(TaskStatus.PENDIENTE);
@@ -55,6 +55,14 @@ public class TaskService {
         Page<Task> tasks = taskRepository.findByAuthor(pageable, user.getUsername());
         if (tasks.isEmpty()) {
             throw new TaskNotFoundException();
+        }
+        return tasks;
+    }
+
+    public Page<Task> getAllTask(Pageable pageable) {
+        Page<Task> tasks = taskRepository.findAll(pageable);
+        if (tasks.isEmpty()) {
+            throw new TaskNotFoundException("Aún no se han creado tareas");
         }
         return tasks;
     }

@@ -48,15 +48,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-                }, () -> {;
-                    // Caso raro de que un usuario tenga un token válido
-                    // pero no encontremos su username en la base de datos
+                }, () -> {
                     throw new UsernameNotFoundException("User not found with id: " + uuid);
                 });
 
             }
-
-            // El caso de pasar al bloque catch por una excepción, no encadenamos el siguiente filtro
             filterChain.doFilter(request, response);
 
         } catch (JwtException e) {
