@@ -2,7 +2,6 @@ package com.salesianostriana.dam.precioustime.task.model;
 
 import com.salesianostriana.dam.precioustime.category.model.Category;
 import com.salesianostriana.dam.precioustime.project.model.Project;
-import com.salesianostriana.dam.precioustime.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;

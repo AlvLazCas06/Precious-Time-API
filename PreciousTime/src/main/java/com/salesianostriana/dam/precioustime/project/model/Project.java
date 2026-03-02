@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
@@ -35,6 +36,7 @@ public class Project {
     @Lob
     private String description;
 
+    @CreatedDate
     private LocalDateTime startDate;
 
     private LocalDateTime finishDate;

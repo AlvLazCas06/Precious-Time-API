@@ -2,8 +2,6 @@ package com.salesianostriana.dam.precioustime.category.dto;
 
 import com.salesianostriana.dam.precioustime.category.model.Category;
 import com.salesianostriana.dam.precioustime.category.validation.annotation.UniqueCategoryName;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 

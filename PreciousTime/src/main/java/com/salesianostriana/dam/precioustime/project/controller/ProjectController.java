@@ -1,15 +1,13 @@
 package com.salesianostriana.dam.precioustime.project.controller;
 
-import com.salesianostriana.dam.precioustime.project.dto.CreateProjectRequest;
-import com.salesianostriana.dam.precioustime.project.dto.EditProjectRequest;
-import com.salesianostriana.dam.precioustime.project.dto.ProjectResponse;
-import com.salesianostriana.dam.precioustime.project.dto.ProjectSpecDTO;
+import com.salesianostriana.dam.precioustime.project.dto.*;
 import com.salesianostriana.dam.precioustime.project.service.ProjectService;
 import com.salesianostriana.dam.precioustime.user.model.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +32,12 @@ public class ProjectController {
     public Page<ProjectResponse> getProjects(@PageableDefault Pageable pageable, @AuthenticationPrincipal User user) {
         return projectService.findProjectsByAuthor(pageable, user.getUsername())
                 .map(ProjectResponse::of);
+    }
+
+    @GetMapping("/summary")
+    public Page<ProjectSummaryDto> getSummaryProjects(@PageableDefault(size = 3, sort = "startDate", direction = Sort.Direction.DESC) Pageable pageable, @AuthenticationPrincipal User user) {
+        return projectService.findProjectsByAuthor(pageable, user.getUsername())
+                .map(ProjectSummaryDto::of);
     }
 
     @GetMapping("/admin")
