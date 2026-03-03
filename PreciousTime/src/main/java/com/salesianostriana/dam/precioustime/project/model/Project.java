@@ -11,7 +11,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -37,9 +37,9 @@ public class Project {
     private String description;
 
     @CreatedDate
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
-    private LocalDateTime finishDate;
+    private LocalDate finishDate;
 
     @Enumerated(EnumType.STRING)
     private ProjectStatus status;

@@ -4,6 +4,7 @@ import com.salesianostriana.dam.precioustime.project.model.Project;
 import com.salesianostriana.dam.precioustime.task.dto.TaskSummaryDTO;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,8 +12,8 @@ public record ProjectResponse(
         Long id,
         String name,
         String description,
-        LocalDateTime startDate,
-        LocalDateTime finishDate,
+        LocalDate startDate,
+        LocalDate finishDate,
         String status,
         BigDecimal progress,
         String author,

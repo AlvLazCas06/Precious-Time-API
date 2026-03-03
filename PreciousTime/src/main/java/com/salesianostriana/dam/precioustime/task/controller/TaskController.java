@@ -2,12 +2,14 @@ package com.salesianostriana.dam.precioustime.task.controller;
 
 import com.salesianostriana.dam.precioustime.task.dto.CreateTaskRequest;
 import com.salesianostriana.dam.precioustime.task.dto.TaskResponse;
+import com.salesianostriana.dam.precioustime.task.dto.TaskSummaryHomeDTO;
 import com.salesianostriana.dam.precioustime.task.service.TaskService;
 import com.salesianostriana.dam.precioustime.user.model.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,5 +49,15 @@ public class TaskController {
     public TaskResponse getTask(@PathVariable Long id) {
         return TaskResponse.of(taskService.getById(id));
     }
+
+    @GetMapping("/summary")
+    public Page<TaskSummaryHomeDTO> getTaskSummary(
+            @PageableDefault(size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+            @AuthenticationPrincipal User user
+    ) {
+        return taskService.getTasks(pageable, user)
+                .map(TaskSummaryHomeDTO::of);
+    }
+
 
 }
