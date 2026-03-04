@@ -59,12 +59,31 @@ public class TaskService {
         return tasks;
     }
 
+    public Page<Task> getNotCompleted(Pageable pageable, User user) {
+        Page<Task> tasks = taskRepository.findByAuthorAndStatus(user.getUsername(), TaskStatus.PENDIENTE, pageable);
+        if (tasks.isEmpty())
+            throw new TaskNotFoundException();
+        return tasks;
+    }
+
     public Page<Task> getAllTask(Pageable pageable) {
         Page<Task> tasks = taskRepository.findAll(pageable);
         if (tasks.isEmpty()) {
             throw new TaskNotFoundException("Aún no se han creado tareas");
         }
         return tasks;
+    }
+
+    public Task checkCompleted(Long id) {
+        return taskRepository.findById(id)
+                .map(task -> {
+                    if (task.getStatus().equals(TaskStatus.COMPLETADO)) {
+                        throw new BadRequestException("No se puede marcar como completado una tarea que ya lo está");
+                    }
+                    task.setStatus(TaskStatus.COMPLETADO);
+                    return taskRepository.save(task);
+                })
+                .orElseThrow(() -> new TaskNotFoundException(id));
     }
 
 }

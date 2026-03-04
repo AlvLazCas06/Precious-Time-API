@@ -14,7 +14,7 @@ public class UniqueCategoryNameValidator implements ConstraintValidator<UniqueCa
 
     @Override
     public boolean isValid(String name, ConstraintValidatorContext constraintValidatorContext) {
-        if (categoryRepository.existsByName(name)) {
+        if (categoryRepository.existsByName(name.toLowerCase())) {
             throw new CategoryDuplicatedException();
         }
         return true;

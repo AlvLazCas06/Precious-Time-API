@@ -38,6 +38,7 @@ public class Task {
     @Column(nullable = false)
     private Priority priority;
 
+    @Column(nullable = false)
     private LocalDateTime completedAt;
 
     @ManyToOne

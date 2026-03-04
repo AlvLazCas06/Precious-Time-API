@@ -55,8 +55,13 @@ public class TaskController {
             @PageableDefault(size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
             @AuthenticationPrincipal User user
     ) {
-        return taskService.getTasks(pageable, user)
+        return taskService.getNotCompleted(pageable, user)
                 .map(TaskSummaryHomeDTO::of);
+    }
+
+    @PatchMapping("/{id:[0-9]+}/completed")
+    public TaskResponse checkCompleted(@PathVariable Long id) {
+        return TaskResponse.of(taskService.checkCompleted(id));
     }
 
 
