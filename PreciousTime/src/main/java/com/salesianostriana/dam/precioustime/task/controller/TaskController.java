@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.precioustime.task.controller;
 
 import com.salesianostriana.dam.precioustime.task.dto.CreateTaskRequest;
+import com.salesianostriana.dam.precioustime.task.dto.EditTaskRequest;
 import com.salesianostriana.dam.precioustime.task.dto.TaskResponse;
 import com.salesianostriana.dam.precioustime.task.dto.TaskSummaryHomeDTO;
 import com.salesianostriana.dam.precioustime.task.service.TaskService;
@@ -33,7 +34,7 @@ public class TaskController {
 
     @GetMapping
     public Page<TaskResponse> getTasksUser(
-            @PageableDefault Pageable pageable,
+            @PageableDefault(sort = {"status"}, direction = Sort.Direction.DESC) Pageable pageable,
             @AuthenticationPrincipal User user
     ) {
         return taskService.getTasks(pageable, user).map(TaskResponse::of);
@@ -59,10 +60,20 @@ public class TaskController {
                 .map(TaskSummaryHomeDTO::of);
     }
 
+    @PutMapping("/{id:[0-9]+}")
+    public TaskResponse editTask(@PathVariable Long id, @RequestBody EditTaskRequest cmd) {
+        return TaskResponse.of(taskService.editTask(id, cmd));
+    }
+
     @PatchMapping("/{id:[0-9]+}/completed")
     public TaskResponse checkCompleted(@PathVariable Long id) {
         return TaskResponse.of(taskService.checkCompleted(id));
     }
 
+    @DeleteMapping("/{id:[0-9]+}")
+    public ResponseEntity<?> deleteTask(@PathVariable Long id) {
+        taskService.deleteTask(id);
+        return ResponseEntity.noContent().build();
+    }
 
 }

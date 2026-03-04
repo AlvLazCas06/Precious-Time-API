@@ -8,7 +8,9 @@ import com.salesianostriana.dam.precioustime.project.model.Project;
 import com.salesianostriana.dam.precioustime.project.service.ProjectService;
 import com.salesianostriana.dam.precioustime.shared.exception.BadRequestException;
 import com.salesianostriana.dam.precioustime.task.dto.CreateTaskRequest;
+import com.salesianostriana.dam.precioustime.task.dto.EditTaskRequest;
 import com.salesianostriana.dam.precioustime.task.exception.TaskNotFoundException;
+import com.salesianostriana.dam.precioustime.task.model.Priority;
 import com.salesianostriana.dam.precioustime.task.model.Task;
 import com.salesianostriana.dam.precioustime.task.model.TaskStatus;
 import com.salesianostriana.dam.precioustime.task.repository.TaskRepository;
@@ -84,6 +86,40 @@ public class TaskService {
                     return taskRepository.save(task);
                 })
                 .orElseThrow(() -> new TaskNotFoundException(id));
+    }
+
+    public Task editTask(Long id, EditTaskRequest cmd) {
+        return taskRepository.findById(id)
+                .map(task -> {
+                    task.setTitle(cmd.title());
+                    task.setDescription(cmd.description());
+                    task.setPriority(Priority.valueOf(cmd.priority().toUpperCase()));
+                    task.setCompletedAt(cmd.completedAt());
+                    try {
+                        Category category = categoryService.getById(cmd.categoryId());
+                        task.setCategory(category);
+                    } catch (CategoryNotFoundException e) {
+                        throw new BadRequestException(e.getMessage());
+                    }
+                    if (cmd.projectId() != null) {
+                        try {
+                            Project project = projectService.findById(cmd.projectId());
+                            project.addTask(task);
+                        } catch (ProjectNotFoundException e) {
+                            throw new BadRequestException(e.getMessage());
+                        }
+                    }
+                    return taskRepository.save(task);
+                })
+                .orElseThrow(() -> new TaskNotFoundException(id));
+    }
+
+    public void deleteTask(Long id) {
+        Task task = taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException(id));
+        if (task.getProject() != null) {
+            task.getProject().deleteTask(task);
+        }
+        taskRepository.delete(task);
     }
 
 }

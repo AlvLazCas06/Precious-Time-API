@@ -28,6 +28,7 @@ public class Task {
     @Column(nullable = false)
     private String title;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Enumerated(EnumType.STRING)
@@ -50,6 +51,7 @@ public class Task {
     private Project project;
 
     @CreatedBy
+    @Column(updatable = false)
     private String author;
 
     @Override

@@ -13,7 +13,7 @@ import java.util.function.Function;
 public interface ProjectRepository
         extends JpaRepository<Project, Long>, JpaSpecificationExecutor<Project> {
 
-    @EntityGraph(attributePaths = "tasks")
+    @EntityGraph(attributePaths = {"tasks", "tasks.category"})
     Page<Project> findByAuthor(Pageable pageable, String author);
 
     @Override
