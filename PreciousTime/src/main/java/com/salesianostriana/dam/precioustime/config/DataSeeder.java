@@ -27,7 +27,7 @@ import java.time.LocalDateTime;
 
 @Component
 @RequiredArgsConstructor
-public class DataSeeder {
+public class  DataSeeder {
 
     private final CategoryRepository categoryRepository;
     private final ProjectRepository projectRepository;

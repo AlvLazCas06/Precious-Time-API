@@ -30,10 +30,10 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     private String name;
 
-    @Lob
+    @Column(length = 1000)
     private String description;
 
     @CreatedDate
