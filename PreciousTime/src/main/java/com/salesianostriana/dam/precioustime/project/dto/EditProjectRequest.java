@@ -10,7 +10,7 @@ public record EditProjectRequest(
         @NotBlank
         @Size(min = 8, max = 50)
         String name,
-        @Size(max = 200)
+        @Size(max = 1000)
         String description,
         @NotNull
         LocalDate finishDate
