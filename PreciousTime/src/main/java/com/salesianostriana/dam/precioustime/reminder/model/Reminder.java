@@ -1,0 +1,57 @@
+package com.salesianostriana.dam.precioustime.reminder.model;
+
+import com.salesianostriana.dam.precioustime.user.model.User;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.proxy.HibernateProxy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDate;
+import java.util.Objects;
+
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity
+@EntityListeners(AuditingEntityListener.class)
+public class Reminder {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String title;
+
+    private String message;
+
+    @Builder.Default
+    private boolean read = false;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    public User receiver;
+
+    @CreatedDate
+    public LocalDate sendAt;
+
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        Reminder reminder = (Reminder) o;
+        return getId() != null && Objects.equals(getId(), reminder.getId());
+    }
+
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
+
+}

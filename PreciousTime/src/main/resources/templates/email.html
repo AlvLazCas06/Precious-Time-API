@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Precious Time</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f4f6f8;
+            color: #333333;
+        }
+
+        .email-wrapper {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .email-header {
+            background: linear-gradient(135deg, #06B6D4, #14B8A6, #10B981);
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        .email-header h1 {
+            color: #ffffff;
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .email-body {
+            padding: 40px;
+            font-size: 15px;
+            line-height: 1.7;
+            color: #444444;
+        }
+
+        .email-footer {
+            background-color: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+            padding: 28px 40px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .footer-brand-name {
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #06B6D4, #14B8A6, #10B981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-tagline {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-top: 4px;
+        }
+
+        .footer-divider {
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, #06B6D4, #10B981);
+            margin: 14px auto;
+            border-radius: 2px;
+        }
+
+        .footer-copy {
+            font-size: 11px;
+            color: #b0b7c3;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-wrapper">
+
+        <div class="email-header">
+            <h1>Precious Time</h1>
+        </div>
+
+        <div class="email-body">
+            <p th:text="${message}"></p>
+        </div>
+
+        <footer class="email-footer">
+            <div class="footer-logo">
+                <svg width="40" height="40" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M59.9941 110.989C88.1579 110.989 110.989 88.1579 110.989 59.9941C110.989 31.8304 88.1579 8.99912 59.9941 8.99912C31.8304 8.99912 8.99911 31.8304 8.99911 59.9941C8.99911 88.1579 31.8304 110.989 59.9941 110.989Z" stroke="url(#footer_grad0)" stroke-width="7.1993"/>
+                    <path opacity="0.4" d="M59.9944 17.3988C61.3198 17.3988 62.3944 16.3242 62.3944 14.9988C62.3944 13.6733 61.3198 12.5988 59.9944 12.5988C58.6689 12.5988 57.5944 13.6733 57.5944 14.9988C57.5944 16.3242 58.6689 17.3988 59.9944 17.3988Z" fill="url(#footer_grad1)"/>
+                    <path opacity="0.4" d="M104.99 62.3944C106.315 62.3944 107.39 61.3199 107.39 59.9944C107.39 58.6689 106.315 57.5944 104.99 57.5944C103.664 57.5944 102.59 58.6689 102.59 59.9944C102.59 61.3199 103.664 62.3944 104.99 62.3944Z" fill="url(#footer_grad1)"/>
+                    <path opacity="0.4" d="M59.9944 107.39C61.3198 107.39 62.3944 106.315 62.3944 104.99C62.3944 103.664 61.3198 102.59 59.9944 102.59C58.6689 102.59 57.5944 103.664 57.5944 104.99C57.5944 106.315 58.6689 107.39 59.9944 107.39Z" fill="url(#footer_grad1)"/>
+                    <path opacity="0.4" d="M14.9988 62.3944C16.3243 62.3944 17.3988 61.3199 17.3988 59.9944C17.3988 58.6689 16.3243 57.5944 14.9988 57.5944C13.6733 57.5944 12.5988 58.6689 12.5988 59.9944C12.5988 61.3199 13.6733 62.3944 14.9988 62.3944Z" fill="url(#footer_grad1)"/>
+                    <path d="M59.9946 64.7946C62.6456 64.7946 64.7946 62.6456 64.7946 59.9946C64.7946 57.3436 62.6456 55.1946 59.9946 55.1946C57.3436 55.1946 55.1946 57.3436 55.1946 59.9946C55.1946 62.6456 57.3436 64.7946 59.9946 64.7946Z" fill="url(#footer_grad1)"/>
+                    <path d="M59.9942 59.9941L41.9959 46.9933" stroke="url(#footer_grad1)" stroke-width="5.99941" stroke-linecap="round"/>
+                    <path d="M59.9941 59.9941L86.9915 35.9965" stroke="url(#footer_grad1)" stroke-width="5.99941" stroke-linecap="round"/>
+                    <defs>
+                        <linearGradient id="footer_grad0" x1="8.99911" y1="8.99912" x2="110.989" y2="110.989" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#06B6D4"/>
+                            <stop offset="0.5" stop-color="#14B8A6"/>
+                            <stop offset="1" stop-color="#10B981"/>
+                        </linearGradient>
+                        <linearGradient id="footer_grad1" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#06B6D4"/>
+                            <stop offset="0.5" stop-color="#14B8A6"/>
+                            <stop offset="1" stop-color="#10B981"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span class="footer-brand-name">Precious Time</span>
+            </div>
+            <p class="footer-tagline">Gestiona tu tiempo, transforma tu vida.</p>
+            <div class="footer-divider"></div>
+            <p class="footer-copy">&copy; 2026 Precious Time. Todos los derechos reservados.</p>
+        </footer>
+
+    </div>
+</body>
+</html>
