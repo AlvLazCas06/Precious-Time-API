@@ -11,7 +11,8 @@ public record UserResponse(
         String name,
         String lastname,
         boolean premium,
-        Set<UserRole> roles
+        Set<UserRole> roles,
+        boolean active
 ) {
 
     public static UserResponse of(User user) {
@@ -21,7 +22,8 @@ public record UserResponse(
                 user.getName(),
                 user.getLastname(),
                 user.isPremium(),
-                user.getRoles()
+                user.getRoles(),
+                user.isActive()
         );
     }
 

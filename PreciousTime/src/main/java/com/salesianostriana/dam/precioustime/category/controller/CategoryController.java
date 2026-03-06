@@ -39,4 +39,8 @@ public class CategoryController {
         );
     }
 
+    @GetMapping("/{id:[0-9]}")
+    public CategoryResponse getCategory(@PathVariable Long id) {
+        return CategoryResponse.of(categoryService.getById(id));
+    }
 }

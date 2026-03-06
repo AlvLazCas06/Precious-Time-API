@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 public interface ProjectRepository
@@ -21,4 +22,8 @@ public interface ProjectRepository
     default <S extends Project, R> R findBy(PredicateSpecification<Project> spec, Function<? super SpecificationFluentQuery<S>, R> queryFunction) {
         return JpaSpecificationExecutor.super.findBy(spec, queryFunction);
     }
+
+    @Override
+    @EntityGraph(attributePaths = {"tasks", "tasks.category"})
+    Optional<Project> findById(Long aLong);
 }

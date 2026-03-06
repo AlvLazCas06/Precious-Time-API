@@ -181,6 +181,13 @@ public class  DataSeeder {
                 .author("user")
                 .build());
 
+        preferenceRepository.save(Preference.builder()
+                .notificationsActive(true)
+                .theme(Theme.DARK)
+                .type(NotificationType.EMAIL)
+                .author("admin")
+                .build());
+
         if (user != null) {
             reminderRepository.save(Reminder.builder()
                     .title("¡Reunión de equipo!")

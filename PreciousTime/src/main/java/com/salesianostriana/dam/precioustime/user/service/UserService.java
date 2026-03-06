@@ -6,6 +6,8 @@ import com.salesianostriana.dam.precioustime.user.model.User;
 import com.salesianostriana.dam.precioustime.user.model.UserRole;
 import com.salesianostriana.dam.precioustime.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,14 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(cmd.password()));
         user.setRoles(Set.of(UserRole.USER));
         return userRepository.save(user);
+    }
+
+    public Page<User> getUsers(Pageable pageable) {
+        Page<User> users = userRepository.findAll(pageable);
+        if (users.isEmpty()) {
+            throw new UserNotFoundException("No hay Usuarios en la base de datos");
+        }
+        return users;
     }
 
 }

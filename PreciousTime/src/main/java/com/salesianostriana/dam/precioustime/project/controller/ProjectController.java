@@ -61,9 +61,14 @@ public class ProjectController {
     @PostAuthorize("""
         returnObject.author == authentication.principal.username or hasRole('ADMIN')
         """)
-    @PutMapping("/cancel/{id:[0-9]+}")
+    @PatchMapping("/cancel/{id:[0-9]+}")
     public ProjectResponse cancelProject(@PathVariable Long id) {
         return ProjectResponse.of(projectService.cancelProject(id));
+    }
+
+    @GetMapping("/{id:[0-9]+}")
+    public ProjectResponse getProject(@PathVariable Long id) {
+        return ProjectResponse.of(projectService.findById(id));
     }
 
 }
