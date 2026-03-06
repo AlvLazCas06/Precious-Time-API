@@ -82,7 +82,8 @@ public class SecurityConfig {
                 .username("admin")
                 .password(passwordEncoder.encode("admin1234"))
                 .email("admin@gmail.com")
-                .fullName("Admin")
+                .name("Admin")
+                .lastname("Test")
                 .roles(Set.of(UserRole.ADMIN))
                 .build();
         userRepository.save(admin);
@@ -90,12 +91,12 @@ public class SecurityConfig {
         User user = User.builder()
                 .username("user")
                 .password(passwordEncoder.encode("user1234"))
-                .email("user@gmail.com")
-                .fullName("User")
+                .email("lazaro.caalv24@triana.salesianos.edu")
+                .name("User")
+                .lastname("Test")
                 .roles(Set.of(UserRole.USER))
                 .build();
         userRepository.save(user);
-
     }
 
 }

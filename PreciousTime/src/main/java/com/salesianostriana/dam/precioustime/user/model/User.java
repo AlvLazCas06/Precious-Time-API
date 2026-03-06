@@ -37,7 +37,10 @@ public class User implements UserDetails, CredentialsContainer {
     private String email;
 
     @Column(nullable = false)
-    private String fullName;
+    private String name;
+
+    @Column(nullable = false)
+    private String lastname;
 
     @Builder.Default
     private boolean premium = false;

@@ -4,7 +4,10 @@ import com.salesianostriana.dam.precioustime.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Getter
@@ -14,6 +17,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Reminder {
 
     @Id
@@ -30,6 +34,9 @@ public class Reminder {
     @ManyToOne
     @JoinColumn(name = "user_id")
     public User receiver;
+
+    @CreatedDate
+    public LocalDate sendAt;
 
     @Override
     public final boolean equals(Object o) {

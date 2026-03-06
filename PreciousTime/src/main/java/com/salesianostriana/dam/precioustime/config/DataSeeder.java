@@ -177,7 +177,7 @@ public class  DataSeeder {
         preferenceRepository.save(Preference.builder()
                 .notificationsActive(true)
                 .theme(Theme.DARK)
-                .type(NotificationType.IN_APP)
+                .type(NotificationType.EMAIL)
                 .author("user")
                 .build());
 

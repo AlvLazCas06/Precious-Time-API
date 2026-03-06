@@ -8,7 +8,8 @@ import java.util.Set;
 public record UserResponse(
         String username,
         String email,
-        String fullName,
+        String name,
+        String lastname,
         boolean premium,
         Set<UserRole> roles
 ) {
@@ -17,7 +18,8 @@ public record UserResponse(
         return new UserResponse(
                 user.getUsername(),
                 user.getEmail(),
-                user.getFullName(),
+                user.getName(),
+                user.getLastname(),
                 user.isPremium(),
                 user.getRoles()
         );

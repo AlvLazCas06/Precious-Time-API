@@ -11,4 +11,8 @@ public class ReminderNotFoundException extends NotFoundException {
         super("No hay notificaciones en la base de datos");
     }
 
+    public ReminderNotFoundException(Long id) {
+        super("La notificación el id: %d, no existe".formatted(id));
+    }
+
 }

@@ -21,7 +21,9 @@ public record CreateUserRequest(
         @NotBlank
         String verifyPassword,
         @NotBlank
-        String fullName,
+        String name,
+        @NotBlank
+        String lastname,
         @NotBlank
         @Email
         String email
@@ -30,7 +32,8 @@ public record CreateUserRequest(
     public User toEntity() {
         return User.builder()
                 .username(username)
-                .fullName(fullName)
+                .name(name)
+                .lastname(lastname)
                 .email(email)
                 .build();
     }
