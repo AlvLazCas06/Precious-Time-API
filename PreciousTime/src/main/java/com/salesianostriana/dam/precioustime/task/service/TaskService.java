@@ -20,6 +20,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class TaskService {
@@ -120,6 +122,14 @@ public class TaskService {
             task.getProject().deleteTask(task);
         }
         taskRepository.delete(task);
+    }
+
+    public List<Task> getAllTasks() {
+        List<Task> tasks = taskRepository.findAll();
+        if (tasks.isEmpty()) {
+            throw new TaskNotFoundException();
+        }
+        return tasks;
     }
 
 }

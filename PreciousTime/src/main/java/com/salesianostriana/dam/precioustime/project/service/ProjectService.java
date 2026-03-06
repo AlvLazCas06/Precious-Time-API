@@ -15,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.PredicateSpecification;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProjectService {
@@ -79,6 +81,14 @@ public class ProjectService {
                     project.setStatus(ProjectStatus.CANCELADO);
                     return projectRepository.save(project);
                 }).orElseThrow(() -> new ProjectNotFoundException(id));
+    }
+
+    public List<Project> getAllProjects() {
+        List<Project> projects = projectRepository.findAll();
+        if (projects.isEmpty()) {
+            throw new ProjectNotFoundException();
+        }
+        return projects;
     }
 
 }

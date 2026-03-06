@@ -15,6 +15,8 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/projects")
 @RequiredArgsConstructor
@@ -69,6 +71,14 @@ public class ProjectController {
     @GetMapping("/{id:[0-9]+}")
     public ProjectResponse getProject(@PathVariable Long id) {
         return ProjectResponse.of(projectService.findById(id));
+    }
+
+    @GetMapping("/admin/all")
+    public List<ProjectResponse> getAllProjects() {
+        return projectService.getAllProjects()
+                .stream()
+                .map(ProjectResponse::of)
+                .toList();
     }
 
 }

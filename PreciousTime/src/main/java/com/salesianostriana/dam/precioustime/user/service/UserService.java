@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -43,6 +44,14 @@ public class UserService {
         Page<User> users = userRepository.findAll(pageable);
         if (users.isEmpty()) {
             throw new UserNotFoundException("No hay Usuarios en la base de datos");
+        }
+        return users;
+    }
+
+    public List<User> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        if (users.isEmpty()) {
+            throw new UserNotFoundException("");
         }
         return users;
     }

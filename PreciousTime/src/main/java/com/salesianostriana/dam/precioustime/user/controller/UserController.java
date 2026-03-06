@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
@@ -28,6 +30,12 @@ public class UserController {
     public Page<UserResponse> getUsers(@PageableDefault Pageable pageable) {
         return userService.getUsers(pageable)
                 .map(UserResponse::of);
+    }
+
+    @GetMapping("/admin/all")
+    public List<UserResponse> getAllUsers(@PageableDefault Pageable pageable) {
+        return userService.getAllUsers().stream()
+                .map(UserResponse::of).toList();
     }
 
 }

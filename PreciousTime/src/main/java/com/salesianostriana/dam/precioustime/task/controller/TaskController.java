@@ -18,6 +18,8 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/tasks")
 @RequiredArgsConstructor
@@ -73,6 +75,13 @@ public class TaskController {
     public ResponseEntity<?> deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/admin/all")
+    public List<TaskResponse> getAllTasks() {
+        return taskService.getAllTasks()
+                .stream().map(TaskResponse::of)
+                .toList();
     }
 
 }
