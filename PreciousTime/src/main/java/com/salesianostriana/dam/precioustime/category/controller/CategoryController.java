@@ -21,7 +21,7 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public Page<CategoryResponse> getCategories(@PageableDefault Pageable pageable) {
+    public Page<CategoryResponse> getCategories(@PageableDefault(size = 8) Pageable pageable) {
         return categoryService.getAllCategories(pageable)
                 .map(CategoryResponse::of);
     }

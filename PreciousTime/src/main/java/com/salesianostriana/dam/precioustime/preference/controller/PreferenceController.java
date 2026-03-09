@@ -26,9 +26,9 @@ public class PreferenceController {
     }
 
     @PostMapping
-    public ResponseEntity<PreferenceResponse> createPreference() {
+    public ResponseEntity<PreferenceResponse> createPreference(@RequestBody String username) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(PreferenceResponse.of(preferenceService.savePreference()));
+                .body(PreferenceResponse.of(preferenceService.savePreference(username)));
     }
 
     @PutMapping

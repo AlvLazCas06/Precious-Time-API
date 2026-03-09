@@ -1,6 +1,8 @@
 package com.salesianostriana.dam.precioustime.user.service;
 
+import com.salesianostriana.dam.precioustime.shared.exception.BadRequestException;
 import com.salesianostriana.dam.precioustime.user.dto.CreateUserRequest;
+import com.salesianostriana.dam.precioustime.user.dto.EditUserRequest;
 import com.salesianostriana.dam.precioustime.user.exception.UserNotFoundException;
 import com.salesianostriana.dam.precioustime.user.model.User;
 import com.salesianostriana.dam.precioustime.user.model.UserRole;
@@ -54,6 +56,38 @@ public class UserService {
             throw new UserNotFoundException("");
         }
         return users;
+    }
+
+    public User disableUser(String username) {
+        return userRepository.findByUsername(username)
+                .map(user -> {
+                    user.setActive(false);
+                    return userRepository.save(user);
+                })
+                .orElseThrow(() -> new UsernameNotFoundException("El usuario con el username: %s, no existe".formatted(username)));
+    }
+
+    public User editUser(String username, EditUserRequest cmd) {
+        return userRepository.findByUsername(username)
+                .map(user -> {
+                    user.setName(cmd.name());
+                    user.setLastname(cmd.lastname());
+                    user.setEmail(cmd.email());
+                    return userRepository.save(user);
+                })
+                .orElseThrow(() -> new UsernameNotFoundException("El usuario con el username: %s, no existe".formatted(username)));
+    }
+
+    public User setAdminUser(String username) {
+        return userRepository.findByUsername(username)
+                .map(user -> {
+                    if (user.getRoles().contains(UserRole.ADMIN)) {
+                        throw new BadRequestException("No se le puede volver a establecer el rol de Admin");
+                    }
+                    user.getRoles().add(UserRole.ADMIN);
+                    return userRepository.save(user);
+                })
+                .orElseThrow(() -> new UsernameNotFoundException("El usuario con el username: %s, no existe".formatted(username)));
     }
 
 }

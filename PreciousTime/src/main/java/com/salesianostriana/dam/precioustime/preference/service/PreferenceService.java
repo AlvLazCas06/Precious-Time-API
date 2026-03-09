@@ -14,8 +14,8 @@ public class PreferenceService {
 
     private final PreferenceRepository preferenceRepository;
 
-    public Preference savePreference() {
-        return preferenceRepository.save(Preference.builder().build());
+    public Preference savePreference(String username) {
+        return preferenceRepository.save(Preference.builder().author(username).build());
     }
 
     public Preference editPreference(User user, EditPreferenceRequest cmd) {

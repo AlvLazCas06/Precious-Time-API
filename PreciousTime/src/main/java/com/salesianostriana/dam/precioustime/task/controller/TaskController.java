@@ -34,11 +34,12 @@ public class TaskController {
     }
 
     @GetMapping
-    public Page<TaskResponse> getTasksUser(
-            @PageableDefault(sort = {"status"}, direction = Sort.Direction.DESC) Pageable pageable,
+    public List<TaskResponse> getTasksUser(
             @AuthenticationPrincipal User user
     ) {
-        return taskService.getTasks(pageable, user).map(TaskResponse::of);
+        return taskService.getTasks(user)
+                .stream().map(TaskResponse::of)
+                .toList();
     }
 
     @GetMapping("/admin")

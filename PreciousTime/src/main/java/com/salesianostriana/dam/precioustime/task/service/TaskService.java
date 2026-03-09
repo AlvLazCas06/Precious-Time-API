@@ -55,8 +55,8 @@ public class TaskService {
                 orElseThrow(() -> new TaskNotFoundException(id));
     }
 
-    public Page<Task> getTasks(Pageable pageable, User user) {
-        Page<Task> tasks = taskRepository.findByAuthor(pageable, user.getUsername());
+    public List<Task> getTasks(User user) {
+        List<Task> tasks = taskRepository.findByAuthor(user.getUsername());
         if (tasks.isEmpty()) {
             throw new TaskNotFoundException();
         }

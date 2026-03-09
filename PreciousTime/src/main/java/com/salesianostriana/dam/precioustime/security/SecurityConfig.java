@@ -23,6 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -45,7 +46,7 @@ public class SecurityConfig {
                 .cors(corsCong -> {
                     CorsConfiguration configuration = new CorsConfiguration();
                     configuration.setAllowedOrigins(List.of("http://localhost:4200"));
-                    configuration.setAllowedMethods(List.of("GET","POST", "PUT", "DELETE"));
+                    configuration.setAllowedMethods(List.of("GET","POST", "PUT", "DELETE", "PATCH"));
                     configuration.setAllowedHeaders(List.of("*"));
                     configuration.setAllowCredentials(true);
                     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -85,6 +86,7 @@ public class SecurityConfig {
                 .name("Admin")
                 .lastname("Test")
                 .roles(Set.of(UserRole.ADMIN))
+                .registerAt(LocalDateTime.now())
                 .build();
         userRepository.save(admin);
 
@@ -95,6 +97,7 @@ public class SecurityConfig {
                 .name("User")
                 .lastname("Test")
                 .roles(Set.of(UserRole.USER))
+                .registerAt(LocalDateTime.now())
                 .build();
         userRepository.save(user);
     }

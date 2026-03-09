@@ -31,14 +31,14 @@ public class ProjectController {
     }
 
     @GetMapping
-    public Page<ProjectResponse> getProjects(@PageableDefault Pageable pageable, @AuthenticationPrincipal User user) {
-        return projectService.findProjectsByAuthor(pageable, user.getUsername())
-                .map(ProjectResponse::of);
+    public List<ProjectResponse> getProjects(@AuthenticationPrincipal User user) {
+        return projectService.findProjectsByAuthor(user.getUsername()).stream()
+                .map(ProjectResponse::of).toList();
     }
 
     @GetMapping("/summary")
     public Page<ProjectSummaryDto> getSummaryProjects(@PageableDefault(size = 3, sort = "startDate", direction = Sort.Direction.DESC) Pageable pageable, @AuthenticationPrincipal User user) {
-        return projectService.findProjectsByAuthor(pageable, user.getUsername())
+        return projectService.findNotCompletedProjects(user.getUsername(), pageable)
                 .map(ProjectSummaryDto::of);
     }
 

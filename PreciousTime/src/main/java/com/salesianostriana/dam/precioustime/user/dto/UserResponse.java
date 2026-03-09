@@ -3,6 +3,7 @@ package com.salesianostriana.dam.precioustime.user.dto;
 import com.salesianostriana.dam.precioustime.user.model.User;
 import com.salesianostriana.dam.precioustime.user.model.UserRole;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 public record UserResponse(
@@ -12,7 +13,8 @@ public record UserResponse(
         String lastname,
         boolean premium,
         Set<UserRole> roles,
-        boolean active
+        boolean active,
+        LocalDateTime registerAt
 ) {
 
     public static UserResponse of(User user) {
@@ -23,7 +25,8 @@ public record UserResponse(
                 user.getLastname(),
                 user.isPremium(),
                 user.getRoles(),
-                user.isActive()
+                user.isActive(),
+                user.getRegisterAt()
         );
     }
 

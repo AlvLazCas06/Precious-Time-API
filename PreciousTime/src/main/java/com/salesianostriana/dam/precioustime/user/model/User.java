@@ -65,7 +65,7 @@ public class User implements UserDetails, CredentialsContainer {
 
     @Override
     public boolean isEnabled() {
-        return this.isActive();
+        return this.active;
     }
 
     @Override

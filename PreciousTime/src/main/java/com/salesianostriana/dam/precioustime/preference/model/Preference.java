@@ -34,7 +34,6 @@ public class Preference {
     @Builder.Default
     private NotificationType type = NotificationType.IN_APP;
 
-    @CreatedBy
     @Column(updatable = false)
     private String author;
 

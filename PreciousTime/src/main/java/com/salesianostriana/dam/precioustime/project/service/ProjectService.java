@@ -34,8 +34,16 @@ public class ProjectService {
                 .orElseThrow(() -> new ProjectNotFoundException(id));
     }
 
-    public Page<Project> findProjectsByAuthor(Pageable pageable, String author) {
-        Page<Project> projects = projectRepository.findByAuthor(pageable, author);
+    public List<Project> findProjectsByAuthor(String author) {
+        List<Project> projects = projectRepository.findByAuthor(author);
+        if (projects.isEmpty()) {
+            throw new ProjectNotFoundException("El usuario %s no tiene proyectos creados".formatted(author));
+        }
+        return projects;
+    }
+
+    public Page<Project> findNotCompletedProjects(String author, Pageable pageable) {
+        Page<Project> projects = projectRepository.findByAuthorAndStatus(author, ProjectStatus.EN_PROCESO, pageable);
         if (projects.isEmpty()) {
             throw new ProjectNotFoundException("El usuario %s no tiene proyectos creados".formatted(author));
         }

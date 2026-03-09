@@ -7,12 +7,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    Page<Task> findByAuthor(Pageable pageable, String author);
+    @EntityGraph(attributePaths = {"project.tasks", "category"})
+    List<Task> findByAuthor(String author);
 
+    @EntityGraph(attributePaths = {"project.tasks", "category"})
     Page<Task> findByAuthorAndStatus(String author, TaskStatus status, Pageable pageable);
 
     @Override

@@ -20,6 +20,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ReminderService {
@@ -29,8 +31,8 @@ public class ReminderService {
     private final UserService userService;
     private final EmailService emailService;
 
-    public Page<Reminder> findRemindersByUser(User user, Pageable pageable) {
-        Page<Reminder> reminders = reminderRepository.findByReceiver(user, pageable);
+    public List<Reminder> findRemindersByUser(User user) {
+        List<Reminder> reminders = reminderRepository.findByReceiver(user);
         if (reminders.isEmpty()) {
             throw new ReminderNotFoundException();
         }

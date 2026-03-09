@@ -1,5 +1,7 @@
 package com.salesianostriana.dam.precioustime.user.controller;
 
+import com.salesianostriana.dam.precioustime.user.dto.CreateUserRequest;
+import com.salesianostriana.dam.precioustime.user.dto.EditUserRequest;
 import com.salesianostriana.dam.precioustime.user.dto.UserResponse;
 import com.salesianostriana.dam.precioustime.user.model.User;
 import com.salesianostriana.dam.precioustime.user.service.UserService;
@@ -8,9 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,4 +38,23 @@ public class UserController {
                 .map(UserResponse::of).toList();
     }
 
+    @PatchMapping("/admin/{username}/disable")
+    public UserResponse disableUser(@PathVariable String username) {
+        return UserResponse.of(userService.disableUser(username));
+    }
+
+    @PostMapping("/admin")
+    public UserResponse createUser(@RequestBody CreateUserRequest cmd) {
+        return UserResponse.of(userService.createUser(cmd));
+    }
+
+    @PutMapping("/admin/{username}")
+    public UserResponse editUser(@PathVariable String username, @RequestBody EditUserRequest cmd) {
+        return UserResponse.of(userService.editUser(username, cmd));
+    }
+
+    @PatchMapping("/admin/{username}/set-role")
+    public UserResponse setAdminUser(@PathVariable String username) {
+        return UserResponse.of(userService.setAdminUser(username));
+    }
 }
